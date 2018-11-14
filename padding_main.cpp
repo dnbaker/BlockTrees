@@ -9,10 +9,10 @@
 #include <compressed/PCBlockTree.h>
 #include <compressed/CBlockTree.h>
 
-int main() {
+int main(int argc, char *argv[]) {
 
     std::string input;
-    std::ifstream t("/home/sking32/Thesis/Software/BlockTree/cmake-build-debug/in");
+    std::ifstream t(argc == 1 ? "/home/sking32/Thesis/Software/BlockTree/cmake-build-debug/in": argv[1]);
     std::stringstream buffer;
     buffer << t.rdbuf();
     input = buffer.str();
@@ -21,6 +21,11 @@ int main() {
     for (char c: input) {
         characters.insert(c);
     }
+#if !NDEBUG
+    std::string cset(characters.begin(), characters.end());
+    std::sort(cset.begin(), cset.end());
+    std::fprintf(stderr, "cset: %s\n", cset.data());
+#endif
 
 /*
     for (int r = 2; r<=8; r*=2) {
